@@ -11,9 +11,12 @@ import UIKit
 class BookDetailViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var reasonTextView: UITextView!
+    @IBOutlet weak var coverImage: UIImageView!
+    @IBOutlet weak var uploadButton: UIButton!
     
     var bookController: BookController?
     var book: Book?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +46,15 @@ class BookDetailViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func uploadPressed(_ sender: Any) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    
     /*
     // MARK: - Navigation
 
@@ -54,3 +66,17 @@ class BookDetailViewController: UIViewController {
     */
 
 }
+
+extension BookDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            coverImage.image = image
+            dismiss(animated: true, completion: nil)
+        }
+    }
+}
+

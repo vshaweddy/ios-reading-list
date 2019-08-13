@@ -38,7 +38,7 @@ class BookController {
     
     @discardableResult func createBook(named name: String, reasoned reasonToRead: String, readStatus hasBeenRead: Bool ) -> Book {
         
-        let book = Book(name: name, reasonToRead: reasonToRead, hasBeenRead: false)
+        let book = Book(name: name, reasonToRead: reasonToRead)
         books.append(book)
         saveToPersistentStore()
         return book
